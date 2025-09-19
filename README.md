@@ -186,6 +186,11 @@ ai-RAG2/
    - Make sure both frontend and backend are running
    - Check if ports are correct (3000 for frontend, 3001 for backend)
 
+5. **PDF-Parse ENOENT Error**
+   - This error occurs when pdf-parse tries to access test files during import
+   - Fixed by using dynamic import in the server code
+   - If you encounter this error, restart the server
+
 ## Development
 
 ### Adding New Features
