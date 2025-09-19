@@ -1,0 +1,45 @@
+# 📘 Document Q&A Agent with LangChainJS + React + Tailwind
+
+This project builds a local web app where users can **upload documents** (PDFs) and **chat with an AI agent** that answers only from the uploaded content.  
+It uses **LangChainJS** to handle embeddings, vector storage, retrieval, and chaining with LLMs (OpenAI or Ollama).  
+
+---
+
+## 🔄 Flow
+
+1. **Upload Document** → React sends file to Express backend.  
+2. **Parse Document** → extract text using `pdf-parse` or LangChain `PDFLoader`.  
+3. **Chunk Text** → split into ~500–1000 tokens with overlap (`RecursiveCharacterTextSplitter`).  
+4. **Embeddings** → convert chunks to vectors with:  
+   - OpenAI: `text-embedding-3-small`  
+   - Ollama: `nomic-embed-text`  
+5. **Vector Store** → store embeddings in **ChromaDB**.  
+6. **Retriever** → search top-k chunks for each query.  
+7. **LangChain Chain/Agent** → feed retrieved chunks + user’s question into a **RetrievalQAChain** (or Agent with tools).  
+8. **Generative LLM** →  
+   - OpenAI (`gpt-4o-mini`, `gpt-3.5-turbo`)  
+   - Ollama (`mistral`, `llama2`, `gemma`)  
+9. **Frontend Streaming** → deliver answer token-by-token in a React + Tailwind chat UI.  
+
+---
+
+## 🛠 Tech Stack
+
+### Backend
+- `express` → API routes  
+- `multer` → file uploads  
+- `pdf-parse` → extract text  
+- `langchain` → splitters, embeddings, vector store, chains  
+- `chromadb` → local vector DB  
+- `openai` → API client (if using OpenAI)  
+- `node-fetch` → call Ollama API  
+- `dotenv` → manage API keys  
+
+### Frontend
+- `react` + `vite` → UI  
+- `axios` → API requests  
+- `tailwindcss` → styling  
+- `EventSource` → handle streaming responses  
+
+---
+ 
